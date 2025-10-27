@@ -143,9 +143,49 @@ class HotelSystem {
 
     void cancelBooking() {}
 
-    void checkOutCustomer() {}
+    void checkOutCustomer() 
+    {
+        int roomNo;
+        cout << "\nEnter Room Number for checkout: ";
+        cin >> roomNo;
 
-    void showRecentCheckouts() {}
+        if (bookingMap.find(roomNo) != bookingMap.end()) 
+        {
+            Booking* b = bookingMap[roomNo];
+            recentCheckouts.push(*b);
+            bookingMap.erase(roomNo);
+            removeBooking(roomNo);
+            cout << "\n Checkout completed for " << b->name << "!\n";
+        } 
+        else
+        {
+            cout << "\n Room not found in active bookings.\n";
+        }
+    }
+
+
+    void showRecentCheckouts() 
+    {
+        if (recentCheckouts.empty()) 
+        {
+            cout << "\nNo recent check-outs.\n";
+            return;
+        }
+
+        printLine();
+        cout << "Recent Checkouts:\n";
+        printLine();
+
+        stack<Booking> temp = recentCheckouts;
+        while (!temp.empty()) 
+        {
+            Booking b = temp.top();
+            temp.pop();
+            cout << "Name: " << b.name << " | Room: " << b.roomNo
+                 << " | Amount: ₹" << b.amount << endl;
+        }
+        printLine();
+    }
 
     void showWaitingList() {}
 
