@@ -187,7 +187,24 @@ class HotelSystem {
         printLine();
     }
 
-    void showWaitingList() {}
+    void showWaitingList() {
+         if (waitingList.empty()) {
+            cout << "\nNo customers in waiting list.\n";
+            return;
+        }
+
+        printLine();
+        cout << "Waiting List:\n";
+        printLine();
+
+        queue<Booking> temp = waitingList;
+        while (!temp.empty()) {
+            Booking b = temp.front();
+            temp.pop();
+            cout << "Name: " << b.name << " | Desired Room: " << b.roomNo << endl;
+        }
+        printLine();
+    }
 
 };
 
