@@ -139,7 +139,67 @@ class HotelSystem {
         }
     }
 
-    void sortBookings() {}
+    void sortBookings() {
+    
+    if (head == NULL || head->next == NULL) {
+        cout << "\nNot enough bookings to sort.\n";
+        return;
+    }
+
+    vector<Booking*> bookings;
+    Booking* temp = head;
+    while (temp != NULL) {
+        bookings.push_back(temp);
+        temp = temp->next;
+    }
+
+    cout << "\nSort by:\n";
+    cout << "1. Room Number\n";
+    cout << "2. Customer Name\n";
+    cout << "Enter your choice: ";
+    int choice;
+    cin >> choice;
+
+    if (choice == 1) {
+        for (int i = 0; i < bookings.size() - 1; i++) {
+            for (int j = 0; j < bookings.size() - i - 1; j++) {
+                if (bookings[j]->roomNo > bookings[j + 1]->roomNo) {
+                    swap(bookings[j], bookings[j + 1]);
+                }
+            }
+        }
+    } else if (choice == 2) {
+        for (int i = 0; i < bookings.size() - 1; i++) {
+            for (int j = 0; j < bookings.size() - i - 1; j++) {
+                if (bookings[j]->name > bookings[j + 1]->name) {
+                    swap(bookings[j], bookings[j + 1]);
+                }
+            }
+        }
+    } else {
+        cout << "Invalid choice!\n";
+        return;
+    }
+
+    printLine();
+    cout << left << setw(10) << "Room No"
+         << setw(20) << "Customer Name"
+         << setw(15) << "Check-in"
+         << setw(15) << "Check-out"
+         << setw(10) << "Amount\n";
+    printLine();
+
+    for (int i = 0; i < bookings.size(); i++) {
+        Booking* b = bookings[i];
+        cout << left << setw(10) << b->roomNo
+             << setw(20) << b->name
+             << setw(15) << b->checkInDate
+             << setw(15) << b->checkOutDate
+             << "₹" << b->amount << "\n";
+    }
+    printLine();
+}
+
 
     void cancelBooking() {}
 
